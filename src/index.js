@@ -1,91 +1,100 @@
+// https://javascript.plainenglish.io/how-to-create-a-random-hex-colour-generator-in-react-b9a46e3f4bb6
+
 import React, {useState} from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 
 function Game() {
-    const color1 = ("#" + Math.floor(Math.random() * 16777215).toString(16));
-    const [btn1, setBtn1] = useState(color1);
-    const color2 = ("#" + Math.floor(Math.random() * 16777215).toString(16))
-    const [btn2, setBtn2] = useState(color2);
-    const color3 = ("#" + Math.floor(Math.random() * 16777215).toString(16))    
-    const [btn3, setBtn3] = useState(color3);
-    
+    const [btn1, setBtn1] = useState("#000");
+    const [btn2, setBtn2] = useState("#000");
+    const [btn3, setBtn3] = useState("#000");
+    const [ans, setAns] = useState()
     const [count, setCount] = useState(0);
 
-    const backgroundVal = Math.floor(Math.random() * 3);
-    let answer;
-    switch (backgroundVal) {
-        case 0:
-            document.body.style.backgroundColor = color1;
-            answer = 0;
-            break;
-        case 1:
-            document.body.style.backgroundColor = color2;
-            answer = 1;
-            break;
-        case 2:
-            document.body.style.backgrounColor = color3;
-            answer = 2;
-            break;
-        default:
-            break;
-    };
-    const [ans, setAns] = useState(answer);
-    console.log(ans);
+    const randomizeColors = () => {
+        // generate a random integer between 0 and 255
+        const getRgb = () => Math.floor(Math.random() * 256);
 
+        // convert an (r, g, b) value into a hex value
+        const rgbToHex = (r, g, b) => {
+            return ("#" + [r, g, b].map(x => {
+                const hex = x.toString(16);
+                return hex.length === 1 ? "0" + hex : hex;
+            }).join(""));
+        }
 
-    const changeButtons = () => {
-        const color1 = ("#" + Math.floor(Math.random() * 16777215).toString(16));
-        setBtn1(color1);
-        const color2 = ("#" + Math.floor(Math.random() * 16777215).toString(16));
-        setBtn2(color2);
-        const color3 = ("#" + Math.floor(Math.random() * 16777215).toString(16));
-        setBtn3(color3);
+        // update the button text and change background color
+        const handleGenerate = () => {
+            // generate three (r, g, b) values
+            const c1 = {
+                r: getRgb(),
+                g: getRgb(),
+                b: getRgb()
+            };
+            const c2 = {
+                r: getRgb(),
+                g: getRgb(),
+                b: getRgb()
+            }
+            const c3 = {
+                r: getRgb(),
+                g: getRgb(),
+                b: getRgb()
+            }
 
-        const backgroundVal = Math.floor(Math.random() * 3);
-        switch (backgroundVal) {
-            case 0:
-                document.body.style.backgroundColor = color1;
-                setAns(0);
-                break;
-            case 1:
-                document.body.style.backgroundColor = color2;
-                setAns(1);
-                break;
-            case 2:
-                document.body.style.backgrounColor = color3;
-                setAns(2);
-                break;
-            default:
-                break;
-        };
+            // convert those (r, g, b) values to hex values
+            const hex1 = rgbToHex(c1.r, c1.g, c1.b);
+            const hex2 = rgbToHex(c2.r, c2.g, c2.b);
+            const hex3 = rgbToHex(c3.r, c3.g, c3.b)
+
+            // update the button text
+            setBtn1(hex1);
+            setBtn2(hex2);
+            setBtn3(hex3);
+
+            // choose the new background color and update ans accordingly
+            const backgroundVal = Math.floor(Math.random() * 3);
+            switch (backgroundVal) {
+                case 0:
+                    document.body.style.backgroundColor = hex1;
+                    setAns(0);
+                    break;
+                case 1:
+                    document.body.style.backgroundColor = hex2;
+                    setAns(1);
+                    break;
+                case 2:
+                    document.body.style.backgroundColor = hex3;
+                    setAns(2);
+                    break;
+                default:
+                    break;
+            };
+        }
+
+        handleGenerate();
+    }
+
+    const handleClick = (i) => {
+        // check if the correct button was clicked and update count accordingly
+        if (ans === i) {
+            setCount((prev) => prev + 1);
+        }
+
+        // get new button hex values
+        randomizeColors();
     }
 
     return (
         <div>
             <div className="btnRow">
-                <button className="btn" onClick={() => {
-                    if (ans === 0) {
-                        setCount((prev) => prev + 1);
-                    }
-                    changeButtons();
-                }}>
+                <button className="btn" onClick={() => handleClick(0)}>
                     {btn1}
                 </button>
-                <button className="btn" onClick={() => {
-                    if (ans === 1) {
-                        setCount((prev) => prev + 1);
-                    }
-                    changeButtons();
-                }}>
+                <button className="btn" onClick={() => handleClick(1)}>
                     {btn2}
                 </button>
-                <button className="btn" onClick={() => {
-                    if (ans === 2) {
-                        setCount((prev) => prev + 1);
-                    }
-                    changeButtons();
-                }}>
+                <button className="btn" onClick={() => handleClick(2)}>
                     {btn3}
                 </button>
             </div>
