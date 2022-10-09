@@ -1,5 +1,3 @@
-// https://javascript.plainenglish.io/how-to-create-a-random-hex-colour-generator-in-react-b9a46e3f4bb6
-
 import React, {useState} from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
