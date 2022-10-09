@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 
@@ -8,6 +8,10 @@ function Game() {
     const [btn3, setBtn3] = useState("#000");
     const [ans, setAns] = useState()
     const [count, setCount] = useState(0);
+
+    useEffect(() => {
+        randomizeColors();
+    }, []);
 
     const randomizeColors = () => {
         // generate a random integer between 0 and 255
