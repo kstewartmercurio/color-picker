@@ -11,4 +11,14 @@
     height: 40px;
     width: 110px;
     text-align: center;
+    font-size: 14px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.count {
+    position: absolute;
+    top: 53%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Courier New', Courier, monospace;
 }
